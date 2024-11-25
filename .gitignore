@@ -1,0 +1,6 @@
+ftsc
+
+*.o
+
+*.pch
+*.gch
