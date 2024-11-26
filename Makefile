@@ -10,7 +10,7 @@ LDFLAGS := ${CXXFLAGS} ${COMMONFLAGS} $\
 					 -Ldeps/tree-sitter-typescript/typescript -l:libtree-sitter-typescript.a
 
 # uncomment/comment to enable/disable
-# PROCESS_HEADER_FILES := yes
+PROCESS_HEADER_FILES := yes
 PROCESSED_HEADER_FILES := $(if ${PROCESS_HEADER_FILES},$\
 														$(subst .hpp,$\
 															$(if $(findstring clang,${CC}),$\
