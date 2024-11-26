@@ -1,5 +1,5 @@
 CXX ?= c++
-CFLAGS ?= -O2 -march=native -pipe
+CFLAGS := -Og -g -march=native -pipe
 CXXFLAGS ?= ${CFLAGS}
 COMMONFLAGS := -std=c++17 $\
 							 -Wall -Wextra -Wpedantic $\
