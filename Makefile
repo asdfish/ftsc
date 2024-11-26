@@ -3,6 +3,7 @@ CFLAGS ?= -O2 -march=native -pipe
 COMMONFLAGS := -std=c99 $\
 							 -Wall -Wextra -Wpedantic $\
 							 -Iinclude $\
+							 -Ideps/carp $\
 							 -Ideps/tree-sitter-typescript/typescript
 LDFLAGS := ${CFLAGS} ${COMMONFLAGS} $\
 					 -Ldeps/tree-sitter-typescript/typescript -l:libtree-sitter-typescript.a
@@ -58,7 +59,7 @@ build/%.o: src/%.c
 	$(call COMPILE,$<,$@)
 
 %.a:
-	$(MAKE) -C $(dir $@)
+	CFLAGS='${CFLAGS}' $(MAKE) -C $(dir $@)
 
 clean:
 	$(call REMOVE_LIST,${FTSC_REQUIREMENTS})
