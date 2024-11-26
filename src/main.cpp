@@ -1,4 +1,5 @@
 #include <arguments.hpp>
+#include <tree_sitter.hpp>
 #include <syntax_verifier.hpp>
 
 #include <iostream>
@@ -21,7 +22,9 @@ int main(int argc, const char* argv[]) {
     return -1;
   }
 
-  SyntaxVerifier syntax_verifier = SyntaxVerifier(&arguments);
+  TreeSitter tree_sitter = TreeSitter();
+
+  SyntaxVerifier syntax_verifier = SyntaxVerifier(&arguments, &tree_sitter);
   verify_message = syntax_verifier.verify();
   if(verify_message.length()) {
     std::cerr << verify_message << '\n';

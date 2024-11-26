@@ -6,7 +6,7 @@ COMMONFLAGS := -std=c++17 $\
 							 -Iinclude $\
 							 -Ideps/carp $\
 							 -Ideps/tree-sitter/lib/include $\
-							 -Ideps/tree-sitter-typescript/typescript
+							 -Ideps/tree-sitter-typescript/bindings/c
 LDFLAGS := ${CXXFLAGS} ${COMMONFLAGS} $\
 					 -Ldeps/tree-sitter -l:libtree-sitter.a $\
 					 -Ldeps/tree-sitter-typescript/typescript -l:libtree-sitter-typescript.a
