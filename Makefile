@@ -5,8 +5,10 @@ COMMONFLAGS := -std=c++17 $\
 							 -Wall -Wextra -Wpedantic $\
 							 -Iinclude $\
 							 -Ideps/carp $\
+							 -Ideps/tree-sitter/lib/include $\
 							 -Ideps/tree-sitter-typescript/typescript
 LDFLAGS := ${CXXFLAGS} ${COMMONFLAGS} $\
+					 -Ldeps/tree-sitter -l:libtree-sitter.a $\
 					 -Ldeps/tree-sitter-typescript/typescript -l:libtree-sitter-typescript.a
 
 # uncomment/comment to enable/disable
@@ -22,7 +24,8 @@ OBJECT_FILES := $(patsubst src/%.cpp,$\
 									build/%.o,$\
 									$(shell find src -name '*.cpp' -type f))
 
-FTSC_REQUIREMENTS := deps/tree-sitter-typescript/typescript/libtree-sitter-typescript.a $\
+FTSC_REQUIREMENTS := deps/tree-sitter/libtree-sitter.a $\
+										 deps/tree-sitter-typescript/typescript/libtree-sitter-typescript.a $\
 										 ${PROCESSED_HEADER_FILES} ${OBJECT_FILES}
 
 define COMPILE
