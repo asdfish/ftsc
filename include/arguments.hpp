@@ -12,6 +12,7 @@ class Arguments {
     std::string output_file = "a.out.js";
 
     Arguments(int argc, const char* argv[], int* result);
+    std::string verify(void);
 };
 
 #endif

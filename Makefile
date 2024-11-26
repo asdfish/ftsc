@@ -1,7 +1,7 @@
 CXX ?= c++
 CFLAGS ?= -O2 -march=native -pipe
 CXXFLAGS ?= ${CFLAGS}
-COMMONFLAGS := -std=c++11 $\
+COMMONFLAGS := -std=c++17 $\
 							 -Wall -Wextra -Wpedantic $\
 							 -Iinclude $\
 							 -Ideps/carp $\
