@@ -1,31 +1,32 @@
-CC ?= cc
+CXX ?= c++
 CFLAGS ?= -O2 -march=native -pipe
-COMMONFLAGS := -std=c99 $\
+CXXFLAGS ?= ${CFLAGS}
+COMMONFLAGS := -std=c++11 $\
 							 -Wall -Wextra -Wpedantic $\
 							 -Iinclude $\
 							 -Ideps/carp $\
 							 -Ideps/tree-sitter-typescript/typescript
-LDFLAGS := ${CFLAGS} ${COMMONFLAGS} $\
+LDFLAGS := ${CXXFLAGS} ${COMMONFLAGS} $\
 					 -Ldeps/tree-sitter-typescript/typescript -l:libtree-sitter-typescript.a
 
 # uncomment/comment to enable/disable
 # PROCESS_HEADER_FILES := yes
 PROCESSED_HEADER_FILES := $(if ${PROCESS_HEADER_FILES},$\
-														$(subst .h,$\
+														$(subst .hpp,$\
 															$(if $(findstring clang,${CC}),$\
-																.h.pch,$\
-																.h.gch),$\
-															$(shell find include -name '*.h' -type f)))
+																.hpp.pch,$\
+																.hpp.gch),$\
+															$(shell find include -name '*.hpp' -type f)))
 
-OBJECT_FILES := $(patsubst src/%.c,$\
+OBJECT_FILES := $(patsubst src/%.cpp,$\
 									build/%.o,$\
-									$(shell find src -name '*.c' -type f))
+									$(shell find src -name '*.cpp' -type f))
 
 FTSC_REQUIREMENTS := deps/tree-sitter-typescript/typescript/libtree-sitter-typescript.a $\
 										 ${PROCESSED_HEADER_FILES} ${OBJECT_FILES}
 
 define COMPILE
-${CC} -c $(1) ${CFLAGS} ${COMMONFLAGS} -o $(2)
+${CXX} -c $(1) ${CXXFLAGS} ${COMMONFLAGS} -o $(2)
 
 endef
 define REMOVE
@@ -49,9 +50,9 @@ endef
 all: ftsc
 
 ftsc: ${FTSC_REQUIREMENTS}
-	${CC} ${OBJECT_FILES} ${LDFLAGS} -o $@
+	${CXX} ${OBJECT_FILES} ${LDFLAGS} -o $@
 
-build/%.o: src/%.c
+build/%.o: src/%.cpp
 	$(call COMPILE,$<,$@)
 %.gch: %
 	$(call COMPILE,$<,$@)
