@@ -11,7 +11,7 @@ class Arguments {
     std::vector<std::string> input_files;
     std::string output_file = "a.out.js";
 
-    Arguments(int argc, const char* argv[]);
+    Arguments(int argc, const char* argv[], int* result);
 };
 
 #endif
