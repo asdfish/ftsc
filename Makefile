@@ -5,7 +5,7 @@ CFLAGS ?= ${CXXFLAGS}
 override CXXFLAGS += -std=c++17
 override CXXFLAGS += -Wall -Wextra -Wpedantic
 override CXXFLAGS += -Iinclude
-override CXXFLAGS += -Ideps/carp -Ideps/tree-sitter/lib/include -Ideps/tree-sitter-typescript/bindings/c
+override CXXFLAGS += -Ideps/carp/include -Ideps/tree-sitter/lib/include -Ideps/tree-sitter-typescript/bindings/c
 
 LDFLAGS ?=
 override LDFLAGS += ${CXXFLAGS}
