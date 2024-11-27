@@ -16,11 +16,12 @@ class Arguments {
     int parse(int argc, const char* argv[]);
     void print_help(void) const;
     std::string verify(void) const;
+
   private:
-    const std::array<struct CarpOption, 2> options = {
-      (struct CarpOption) { "output", 'o', true, },
-      (struct CarpOption) { "help",   'h', false, },
-    };
+    const std::array<struct CarpOption, 2> options = {{
+      { "output", 'o', true, },
+      { "help",   'h', false, },
+    }};
     const std::array<std::string, 2> option_docs = {
       "Output file, defaults to a.out.js",
       "Print this message"
