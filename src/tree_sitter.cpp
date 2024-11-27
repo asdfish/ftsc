@@ -3,6 +3,11 @@
 
 #include <vector>
 
+#define FREE_FUN(variable, function) { \
+  function(variable); \
+  variable = NULL; \
+}
+
 TreeSitter::TreeSitter(void) {
   language = tree_sitter_typescript();
   parser = ts_parser_new();
@@ -10,9 +15,9 @@ TreeSitter::TreeSitter(void) {
 }
 TreeSitter::~TreeSitter(void) {
   if(parser)
-    ts_parser_delete(parser);
+    FREE_FUN(parser, ts_parser_delete);
   if(tree)
-    ts_tree_delete(tree);
+    FREE_FUN(tree, ts_tree_delete);
 }
 void TreeSitter::parse(const SourceCode& source_code) {
   parse(source_code.contents);
