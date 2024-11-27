@@ -4,8 +4,7 @@
 class Arguments;
 class SourceCode;
 class TreeSitter;
-
-typedef struct TSNode TSNode;
+struct TSNode;
 
 #include <string>
 

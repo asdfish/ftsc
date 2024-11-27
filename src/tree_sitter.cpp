@@ -14,9 +14,11 @@ extern "C" {
 }
 
 TreeSitter::TreeSitter(void) {
-  language = tree_sitter_typescript();
-  parser = ts_parser_new();
-  ts_parser_set_language(parser, language);
+  init();
+}
+TreeSitter::TreeSitter(const std::string& source_code) {
+  init();
+  parse(source_code);
 }
 TreeSitter::~TreeSitter(void) {
   if(parser)
@@ -49,4 +51,10 @@ int TreeSitter::walk(std::function<int(const TSNode& node, void* user_data)> cal
   }
 
   return 0;
+}
+
+void TreeSitter::init(void) {
+  language = tree_sitter_typescript();
+  parser = ts_parser_new();
+  ts_parser_set_language(parser, language);
 }
