@@ -2,8 +2,6 @@
 
 #include <iostream>
 #include <filesystem>
-#include <vector>
-
 
 Arguments::Arguments(void) {}
 int Arguments::parse(int argc, const char* argv[]) {

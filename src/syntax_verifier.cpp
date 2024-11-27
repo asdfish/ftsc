@@ -2,8 +2,6 @@
 
 #include <cstring>
 #include <iostream>
-#include <sstream>
-
 
 SyntaxVerifier::SyntaxVerifier(void) {}
 std::string SyntaxVerifier::verify(const SourceCode& source_code, TreeSitter& tree_sitter) const {

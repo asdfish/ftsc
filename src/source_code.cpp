@@ -2,7 +2,6 @@
 
 #include <cmath>
 #include <cstring>
-#include <iostream>
 #include <fstream>
 
 SourceCode::SourceCode(void) {}
@@ -26,7 +25,7 @@ SourceCode::SourceCode(const std::vector<std::filesystem::path>& paths) {
 
   set_contents(contents_buffer);
 }
-ssize_t SourceCode::get_line_number(size_t char_index) const {
+size_t SourceCode::get_line_number(size_t char_index) const {
   if(!newlines.size())
     return 0;
 
@@ -37,7 +36,7 @@ ssize_t SourceCode::get_line_number(size_t char_index) const {
     ssize_t mid = ((high - low) / 2) + low;
 
     if(newlines[mid] == char_index)
-      return mid;
+      return (size_t) mid;
 
     if(newlines[mid] > char_index)
       high = mid - 1;
@@ -45,12 +44,14 @@ ssize_t SourceCode::get_line_number(size_t char_index) const {
       low = mid + 1;
   }
 
-  return low;
+  return (size_t) low;
 }
 void SourceCode::set_contents(const std::string& contents) {
   newlines.clear();
 
   const char* contents_str = contents.c_str();
+  if(!contents_str)
+    return;
 
   char* contents_p = (char*) contents_str;
   while((contents_p = strstr(contents_p, "\n"))) {

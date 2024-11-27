@@ -16,7 +16,7 @@ class SourceCode {
     SourceCode(const std::filesystem::path& path);
     SourceCode(const std::vector<std::filesystem::path>& paths);
 
-    ssize_t get_line_number(size_t char_index) const;
+    size_t get_line_number(size_t char_index) const;
     void set_contents(const std::string& contents);
 
   private:
