@@ -1,4 +1,6 @@
+#include <arguments.hpp>
 #include <source_code.hpp>
+#include <tree_sitter.hpp>
 
 #include <cmath>
 #include <cstring>

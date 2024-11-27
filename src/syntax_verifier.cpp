@@ -1,4 +1,8 @@
+#include <source_code.hpp>
 #include <syntax_verifier.hpp>
+#include <tree_sitter.hpp>
+
+#include <tree_sitter/api.h>
 
 #include <cstring>
 #include <iostream>

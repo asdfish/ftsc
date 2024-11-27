@@ -1,9 +1,12 @@
 #ifndef TREE_SITTER_HPP
 #define TREE_SITTER_HPP
 
-#include <source_code.hpp>
+class SourceCode;
 
-#include <tree_sitter/api.h>
+typedef struct TSLanguage TSLanguage;
+typedef struct TSNode TSNode;
+typedef struct TSParser TSParser;
+typedef struct TSTree TSTree;
 
 #include <functional>
 #include <string>

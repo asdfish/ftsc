@@ -1,9 +1,13 @@
 #ifndef SYNTAX_VERIFIER_HPP
 #define SYNTAX_VERIFIER_HPP
 
-#include <arguments.hpp>
-#include <source_code.hpp>
-#include <tree_sitter.hpp>
+class Arguments;
+class SourceCode;
+class TreeSitter;
+
+typedef struct TSNode TSNode;
+
+#include <string>
 
 class SyntaxVerifier {
   public:
