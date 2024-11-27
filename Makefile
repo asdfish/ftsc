@@ -9,6 +9,7 @@ override CXXFLAGS += -Ideps/carp/include -Ideps/tree-sitter/lib/include -Ideps/t
 
 LDFLAGS ?=
 override LDFLAGS += ${CXXFLAGS}
+override LDFLAGS += -Ldeps/carp -lcarp
 override LDFLAGS += -Ldeps/tree-sitter -ltree-sitter
 override LDFLAGS += -Ldeps/tree-sitter-typescript/typescript -ltree-sitter-typescript
 
@@ -25,12 +26,17 @@ OBJECT_FILES := $(patsubst src/%.cpp,$\
 									build/%.o,$\
 									$(shell find src -name '*.cpp' -type f))
 
-FTSC_REQUIREMENTS := deps/tree-sitter/libtree-sitter.a $\
+FTSC_REQUIREMENTS := deps/carp/libcarp.a $\
+										 deps/tree-sitter/libtree-sitter.a $\
 										 deps/tree-sitter-typescript/typescript/libtree-sitter-typescript.a $\
 										 ${PROCESSED_HEADER_FILES} ${OBJECT_FILES}
 
 define COMPILE
-${CXX} -c $(1) ${CXXFLAGS} -o $(2)
+$(CXX) -c $(1) ${CXXFLAGS} -o $(2)
+
+endef
+define COMPILE_MAKE
+CFLAGS='${CFLAGS}' $(MAKE) -C $(dir $(1)) $(2)
 
 endef
 define REMOVE
@@ -38,16 +44,15 @@ $(if $(wildcard $(1)),$\
 	rm $(1))
 
 endef
-define REMOVE_LIBRARY
-$(if $(wildcard $(1)),$\
-	$(MAKE) -C $(dir $(1)) clean)
+define REMOVE_MAKE
+$(MAKE) -C $(dir $(1)) clean
 
 endef
 define REMOVE_LIST
 $(foreach ITEM,$\
 	$(1),$\
 	$(if $(findstring .a,${ITEM}),$\
-		$(call REMOVE_LIBRARY,${ITEM}),$\
+		$(call REMOVE_MAKE,${ITEM}),$\
 		$(call REMOVE,${ITEM})))
 endef
 
@@ -64,11 +69,11 @@ build/%.o: src/%.cpp
 	$(call COMPILE,$<,$@)
 	
 %.a:
-	CFLAGS='${CFLAGS}' $(MAKE) -C $(dir $@)
+	$(call COMPILE_MAKE,$@)
 deps/tree-sitter/libtree-sitter.a:
-	CFLAGS='${CFLAGS}' $(MAKE) -C $(dir $@) libtree-sitter.a
+	$(call COMPILE_MAKE,$@,libtree-sitter.a)
 deps/tree-sitter-typescript/typescript/libtree-sitter-typescript.a:
-	CFLAGS='${CFLAGS}' $(MAKE) -C $(dir $@) libtree-sitter-typescript.a
+	$(call COMPILE_MAKE,$@,libtree-sitter-typescript.a)
 
 clean:
 	$(call REMOVE_LIST,${FTSC_REQUIREMENTS})
