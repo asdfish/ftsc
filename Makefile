@@ -16,7 +16,7 @@ override LDFLAGS += -Ldeps/tree-sitter-typescript/typescript -l:libtree-sitter-t
 FTSC_PROCESS_HEADER_FILES ?= yes
 PROCESSED_HEADER_FILES := $(if ${FTSC_PROCESS_HEADER_FILES},$\
 														$(subst .hpp,$\
-															$(if $(findstring clang,${CC}),$\
+															$(if $(findstring clang,${CXX}),$\
 																.hpp.pch,$\
 																.hpp.gch),$\
 															$(shell find include -name '*.hpp' -type f)))
