@@ -39,6 +39,11 @@ define COMPILE_MAKE
 CFLAGS='${CFLAGS}' $(MAKE) -C $(dir $(1)) $(2)
 
 endef
+define OBJECT_REQUIREMENTS
+$(if $(wildcard src/$(1).cpp),src/$(1).cpp) $\
+$(if $(wildcard include/$(1).hpp),include/$(1).hpp)
+
+endef
 define REMOVE
 $(if $(wildcard $(1)),$\
 	rm $(1))

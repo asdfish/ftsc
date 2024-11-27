@@ -1,5 +1,6 @@
 #include <arguments.hpp>
 
+#include <cstring>
 #include <iostream>
 #include <filesystem>
 
@@ -32,6 +33,9 @@ int Arguments::parser_callback(char flag_short, enum CarpArgumentType argument_t
   switch(argument_type) {
     case FLAG:
       switch(flag_short) {
+        case 'N':
+          arguments->node_colors.clear();
+          break;
         case 'o':
           if(!argument) {
             std::cerr << "Missing argument for flag 'o'\n";
@@ -42,6 +46,28 @@ int Arguments::parser_callback(char flag_short, enum CarpArgumentType argument_t
         case 'h':
           arguments->print_help();
           return 1;
+        case 'n':
+          if(!argument) {
+            std::cerr << "Missing argument for flag 'n'\n";
+            return -1;
+          }
+
+          char* split = (char*) strstr(argument, "=");
+          if(!split) {
+            std::cerr << "Missing value for flag 'n'.\n"
+              "See ftsc -h for usage.\n";
+            return -1;
+          }
+
+          *split = '\0';
+          if(!strlen(argument) || !strlen(split + 1)) {
+            std::cerr << "Missing value for flag 'n'.\n"
+              "See ftsc -h for usage.\n";
+            return -1;
+          }
+
+          arguments->node_colors[std::string(argument)] = std::string(split + 1);
+          break;
       }
       break;
     case KEY:
