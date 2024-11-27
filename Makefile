@@ -1,7 +1,7 @@
 CXX ?= c++
 
-CXXFLAGS ?= -Og -g -march=native -pipe
-CFLAGS ?= ${CXXFLAGS}
+CFLAGS ?= -Og -g -march=native -pipe
+CXXFLAGS ?= ${CFLAGS}
 override CXXFLAGS += -std=c++17
 override CXXFLAGS += -Wall -Wextra -Wpedantic
 override CXXFLAGS += -Iinclude
@@ -60,6 +60,7 @@ all: ftsc
 
 ftsc: ${FTSC_REQUIREMENTS}
 	${CXX} ${OBJECT_FILES} ${LDFLAGS} -o $@
+	strip $@
 
 build/%.o: src/%.cpp
 	$(call COMPILE,$<,$@)
