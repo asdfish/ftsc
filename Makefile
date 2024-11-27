@@ -61,9 +61,13 @@ build/%.o: src/%.cpp
 	$(call COMPILE,$<,$@)
 %.pch: %
 	$(call COMPILE,$<,$@)
-
+	
 %.a:
 	CFLAGS='${CFLAGS}' $(MAKE) -C $(dir $@)
+deps/tree-sitter/libtree-sitter.a:
+	CFLAGS='${CFLAGS}' $(MAKE) -C $(dir $@) libtree-sitter.a
+deps/tree-sitter-typescript/typescript/libtree-sitter-typescript.a:
+	CFLAGS='${CFLAGS}' $(MAKE) -C $(dir $@) libtree-sitter-typescript.a
 
 clean:
 	$(call REMOVE_LIST,${FTSC_REQUIREMENTS})
