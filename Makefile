@@ -1,19 +1,20 @@
 CXX ?= c++
-CFLAGS := -Og -g -march=native -pipe
-CXXFLAGS ?= ${CFLAGS}
-COMMONFLAGS := -std=c++17 $\
-							 -Wall -Wextra -Wpedantic $\
-							 -Iinclude $\
-							 -Ideps/carp $\
-							 -Ideps/tree-sitter/lib/include $\
-							 -Ideps/tree-sitter-typescript/bindings/c
-LDFLAGS := ${CXXFLAGS} ${COMMONFLAGS} $\
-					 -Ldeps/tree-sitter -l:libtree-sitter.a $\
-					 -Ldeps/tree-sitter-typescript/typescript -l:libtree-sitter-typescript.a
 
-# uncomment/comment to enable/disable
-PROCESS_HEADER_FILES := yes
-PROCESSED_HEADER_FILES := $(if ${PROCESS_HEADER_FILES},$\
+CXXFLAGS ?= -Og -g -march=native -pipe
+CFLAGS ?= ${CXXFLAGS}
+override CXXFLAGS += -std=c++17
+override CXXFLAGS += -Wall -Wextra -Wpedantic
+override CXXFLAGS += -Iinclude
+override CXXFLAGS += -Ideps/carp -Ideps/tree-sitter/lib/include -Ideps/tree-sitter-typescript/bindings/c
+
+LDFLAGS ?=
+override LDFLAGS += ${CXXFLAGS}
+override LDFLAGS += -Ldeps/tree-sitter -l:libtree-sitter.a
+override LDFLAGS += -Ldeps/tree-sitter-typescript/typescript -l:libtree-sitter-typescript.a
+
+# set to empty value to disable
+FTSC_PROCESS_HEADER_FILES ?= yes
+PROCESSED_HEADER_FILES := $(if ${FTSC_PROCESS_HEADER_FILES},$\
 														$(subst .hpp,$\
 															$(if $(findstring clang,${CC}),$\
 																.hpp.pch,$\
@@ -29,7 +30,7 @@ FTSC_REQUIREMENTS := deps/tree-sitter/libtree-sitter.a $\
 										 ${PROCESSED_HEADER_FILES} ${OBJECT_FILES}
 
 define COMPILE
-${CXX} -c $(1) ${CXXFLAGS} ${COMMONFLAGS} -o $(2)
+${CXX} -c $(1) ${CXXFLAGS} -o $(2)
 
 endef
 define REMOVE
