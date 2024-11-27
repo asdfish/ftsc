@@ -1,6 +1,7 @@
 #include <arguments.hpp>
-#include <tree_sitter.hpp>
+#include <source_code.hpp>
 #include <syntax_verifier.hpp>
+#include <tree_sitter.hpp>
 
 #include <iostream>
 
@@ -22,10 +23,13 @@ int main(int argc, const char* argv[]) {
     return -1;
   }
 
-  TreeSitter tree_sitter = TreeSitter();
+  SourceCode source_code = SourceCode(arguments.input_files);
 
-  SyntaxVerifier syntax_verifier = SyntaxVerifier(&arguments, &tree_sitter);
-  verify_message = syntax_verifier.verify();
+  TreeSitter tree_sitter = TreeSitter();
+  tree_sitter.parse(source_code);
+
+  SyntaxVerifier syntax_verifier = SyntaxVerifier();
+  verify_message = syntax_verifier.verify(source_code, tree_sitter);
   if(verify_message.length()) {
     std::cerr << verify_message << '\n';
     return -1;

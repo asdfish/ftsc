@@ -3,9 +3,28 @@
 #include <cmath>
 #include <cstring>
 #include <iostream>
+#include <fstream>
 
-SourceCode::SourceCode(void) {
-  set_contents(contents);
+SourceCode::SourceCode(void) {}
+SourceCode::SourceCode(const std::string& path) {
+  set_contents(file_contents(path));
+}
+SourceCode::SourceCode(const std::vector<std::string>& paths) {
+  std::string contents_buffer;
+  for(const std::string& path: paths)
+    contents_buffer += file_contents(path) + "\n";
+
+  set_contents(contents_buffer);
+}
+SourceCode::SourceCode(const std::filesystem::path& path) {
+  set_contents(file_contents(path));
+}
+SourceCode::SourceCode(const std::vector<std::filesystem::path>& paths) {
+  std::string contents_buffer;
+  for(const std::filesystem::path& path: paths)
+    contents_buffer += file_contents(path) + "\n";
+
+  set_contents(contents_buffer);
 }
 
 ssize_t SourceCode::line_number(size_t char_index) {
@@ -29,7 +48,6 @@ ssize_t SourceCode::line_number(size_t char_index) {
 
   return low;
 }
-
 void SourceCode::set_contents(const std::string& contents) {
   newlines.clear();
 
@@ -42,4 +60,15 @@ void SourceCode::set_contents(const std::string& contents) {
   }
 
   this->contents = contents;
+}
+
+std::string SourceCode::file_contents(const std::filesystem::path& path) {
+  std::ifstream file = std::ifstream(path);
+  if(!file.good())
+    return "";
+
+  std::stringstream file_buffer;
+  file_buffer << file.rdbuf();
+
+  return file_buffer.str();
 }

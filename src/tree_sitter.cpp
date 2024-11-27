@@ -13,6 +13,9 @@ TreeSitter::~TreeSitter(void) {
   if(tree)
     ts_tree_delete(tree);
 }
+void TreeSitter::parse(const SourceCode& source_code) {
+  parse(source_code.contents);
+}
 void TreeSitter::parse(const std::string& string) {
   tree = ts_parser_parse_string(parser, tree, string.c_str(), string.length());
 }
