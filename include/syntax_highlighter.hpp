@@ -15,13 +15,13 @@ class SourceCode;
 
 class SyntaxHighlighter {
   public:
-    const Arguments* arguments_p = NULL;
+    Arguments* arguments_p = NULL;
     std::string source_code;
     TreeSitter tree_sitter;
 
-    SyntaxHighlighter(const Arguments* arguments_p, const std::string& source_code);
-    SyntaxHighlighter(const Arguments* arguments_p, const std::string& source_code, const TSNode& node);
-    SyntaxHighlighter(const Arguments* arguments_p, const SourceCode& source_code);
+    SyntaxHighlighter(Arguments* arguments_p, const std::string& source_code);
+    SyntaxHighlighter(Arguments* arguments_p, const std::string& source_code, const TSNode& node);
+    SyntaxHighlighter(Arguments* arguments_p, const SourceCode& source_code);
     std::string highlight(void);
     void set_source_code(const std::string& source_code);
   private:

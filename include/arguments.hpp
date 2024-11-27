@@ -13,7 +13,6 @@ extern "C" {
 class Arguments {
   public:
     std::map<std::string, std::string> node_colors = {
-      { "ERROR",  "41" },
       { "number", "34" },
     };
     std::vector<std::string> input_files;
@@ -25,7 +24,7 @@ class Arguments {
     std::string verify(void) const;
 
   private:
-    const std::array<struct CarpOption, 4> options = {{
+    static constexpr std::array<struct CarpOption, 4> options = {{
       { "output",     'o', true, },
       { "help",       'h', false, },
       { "node",       'n', true, },

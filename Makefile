@@ -1,7 +1,7 @@
 CXX ?= c++
 
-CFLAGS ?= -O3 -march=native -pipe
-CXXFLAGS ?= ${CFLAGS}
+CFLAGS := -O0 -march=native -pipe
+CXXFLAGS := ${CFLAGS}
 override CXXFLAGS += -std=c++17
 override CXXFLAGS += -Wall -Wextra -Wpedantic
 override CXXFLAGS += -Iinclude
