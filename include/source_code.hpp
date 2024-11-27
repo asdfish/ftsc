@@ -16,11 +16,11 @@ class SourceCode {
     SourceCode(const std::filesystem::path& path);
     SourceCode(const std::vector<std::filesystem::path>& paths);
 
-    ssize_t line_number(size_t char_index);
+    ssize_t get_line_number(size_t char_index) const;
     void set_contents(const std::string& contents);
 
   private:
-    std::string file_contents(const std::filesystem::path& path);
+    std::string get_file_contents(const std::filesystem::path& path) const;
 };
 
 #endif

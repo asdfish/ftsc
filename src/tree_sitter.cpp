@@ -4,8 +4,9 @@
 #include <vector>
 
 TreeSitter::TreeSitter(void) {
+  language = tree_sitter_typescript();
   parser = ts_parser_new();
-  ts_parser_set_language(parser, tree_sitter_typescript());
+  ts_parser_set_language(parser, language);
 }
 TreeSitter::~TreeSitter(void) {
   if(parser)
@@ -19,7 +20,7 @@ void TreeSitter::parse(const SourceCode& source_code) {
 void TreeSitter::parse(const std::string& string) {
   tree = ts_parser_parse_string(parser, tree, string.c_str(), string.length());
 }
-int TreeSitter::walk(std::function<int(const TSNode& node, void* user_data)> callback, void* user_data) {
+int TreeSitter::walk(std::function<int(const TSNode& node, void* user_data)> callback, void* user_data) const {
   if(!tree)
     return 0;
 

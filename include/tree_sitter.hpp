@@ -10,6 +10,7 @@
 
 class TreeSitter {
   public:
+    const TSLanguage* language = NULL;
     TSParser* parser = NULL;
     TSTree* tree = NULL;
 
@@ -18,7 +19,7 @@ class TreeSitter {
 
     void parse(const SourceCode& source_code);
     void parse(const std::string& string);
-    int walk(std::function<int(const TSNode& node, void* user_data)> callback, void* user_data);
+    int walk(std::function<int(const TSNode& node, void* user_data)> callback, void* user_data) const;
 };
 
 #endif

@@ -7,27 +7,26 @@
 
 SourceCode::SourceCode(void) {}
 SourceCode::SourceCode(const std::string& path) {
-  set_contents(file_contents(path));
+  set_contents(get_file_contents(path));
 }
 SourceCode::SourceCode(const std::vector<std::string>& paths) {
   std::string contents_buffer;
   for(const std::string& path: paths)
-    contents_buffer += file_contents(path) + "\n";
+    contents_buffer += get_file_contents(path) + "\n";
 
   set_contents(contents_buffer);
 }
 SourceCode::SourceCode(const std::filesystem::path& path) {
-  set_contents(file_contents(path));
+  set_contents(get_file_contents(path));
 }
 SourceCode::SourceCode(const std::vector<std::filesystem::path>& paths) {
   std::string contents_buffer;
   for(const std::filesystem::path& path: paths)
-    contents_buffer += file_contents(path) + "\n";
+    contents_buffer += get_file_contents(path) + "\n";
 
   set_contents(contents_buffer);
 }
-
-ssize_t SourceCode::line_number(size_t char_index) {
+ssize_t SourceCode::get_line_number(size_t char_index) const {
   if(!newlines.size())
     return 0;
 
@@ -62,7 +61,7 @@ void SourceCode::set_contents(const std::string& contents) {
   this->contents = contents;
 }
 
-std::string SourceCode::file_contents(const std::filesystem::path& path) {
+std::string SourceCode::get_file_contents(const std::filesystem::path& path) const {
   std::ifstream file = std::ifstream(path);
   if(!file.good())
     return "";
