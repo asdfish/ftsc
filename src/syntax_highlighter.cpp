@@ -2,6 +2,7 @@
 #include <syntax_highlighter.hpp>
 #include <utils.hpp>
 
+#include <algorithm>
 #include <iostream>
 
 extern "C" {
@@ -23,6 +24,31 @@ SyntaxHighlighter::SyntaxHighlighter(Arguments* arguments_p, const SourceCode& s
 std::string SyntaxHighlighter::highlight(void) {
   nodes.clear();
   tree_sitter.walk(walk_callback, (void*) this);
+  if(!nodes.size())
+    return "";
+
+  std::vector<size_t> breakpoints;
+  breakpoints.reserve((nodes.size() * 2) + 2);
+  breakpoints.push_back(0);
+  for(const TSNode& node : nodes) {
+    breakpoints.push_back(ts_node_start_byte(node));
+    breakpoints.push_back(ts_node_end_byte(node));
+  }
+  breakpoints.push_back(source_code.length());
+
+  std::sort(breakpoints.begin(), breakpoints.end());
+
+  std::vector<std::string> splits;
+  splits.reserve(breakpoints.size() / 2);
+  for(size_t i = 0; i < breakpoints.size() - 1; i ++) {
+    size_t min = breakpoints[i];
+    size_t max = breakpoints[i + 1];
+
+    splits.push_back(source_code.substr(min, max - min));
+  }
+
+  for(const std::string& split : splits)
+    std::cout << split << '\n';
   return "";
 }
 void SyntaxHighlighter::set_source_code(const std::string& source_code) {

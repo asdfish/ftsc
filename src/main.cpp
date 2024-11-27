@@ -5,6 +5,19 @@
 
 #include <iostream>
 
+/*#include <syntax_highlighter.hpp>*/
+/**/
+/*int main(int argc, const char* argv[]) {*/
+/*  Arguments arguments = Arguments();*/
+/*  if(arguments.parse(argc, argv) != 0)*/
+/*    return -1;*/
+/**/
+/*  SyntaxHighlighter syntax_highlighter = SyntaxHighlighter(&arguments, "() => {\n"*/
+/*      "let i = 0;\n"*/
+/*      "}");*/
+/*  std::cout << syntax_highlighter.highlight();*/
+/*}*/
+
 int main(int argc, const char* argv[]) {
   Arguments arguments = Arguments();
   if(arguments.parse(argc, argv))
