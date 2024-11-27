@@ -9,8 +9,8 @@ override CXXFLAGS += -Ideps/carp -Ideps/tree-sitter/lib/include -Ideps/tree-sitt
 
 LDFLAGS ?=
 override LDFLAGS += ${CXXFLAGS}
-override LDFLAGS += -Ldeps/tree-sitter -l:libtree-sitter.a
-override LDFLAGS += -Ldeps/tree-sitter-typescript/typescript -l:libtree-sitter-typescript.a
+override LDFLAGS += -Ldeps/tree-sitter -ltree-sitter
+override LDFLAGS += -Ldeps/tree-sitter-typescript/typescript -ltree-sitter-typescript
 
 # set to empty value to disable
 FTSC_PROCESS_HEADER_FILES ?= yes
