@@ -3,9 +3,8 @@
 
 #include <tree_sitter/api.h>
 
+#include <functional>
 #include <string>
-
-typedef int (*)
 
 class TreeSitter {
   public:
@@ -16,7 +15,7 @@ class TreeSitter {
     ~TreeSitter(void);
 
     void parse(const std::string& string);
-    void walk();
+    int walk(std::function<int(const TSNode& node, void* user_data)> callback, void* user_data);
 };
 
 #endif
