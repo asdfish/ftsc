@@ -12,7 +12,8 @@ class Arguments {
     std::vector<std::string> input_files;
     std::string output_file = "a.out.js";
 
-    Arguments(int argc, const char* argv[], int* result);
+    Arguments(void);
+    int parse(int argc, const char* argv[]);
     void print_help(void) const;
     std::string verify(void) const;
   private:

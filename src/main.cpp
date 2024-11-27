@@ -6,20 +6,15 @@
 #include <iostream>
 
 int main(int argc, const char* argv[]) {
-  int result = 0;
-  Arguments arguments = Arguments(argc, argv, &result);
+  Arguments arguments = Arguments();
+  if(arguments.parse(argc, argv))
+    return -1;
 
-  if(result != 0) {
-    if(result < 0)
-      std::cerr << "Failed to parse arguments\n";
-    return result;
-  }
+  std::string output_message = "";
 
-  std::string verify_message = "";
-
-  verify_message = arguments.verify();
-  if(verify_message.length()) {
-    std::cerr << verify_message << '\n';
+  output_message = arguments.verify();
+  if(output_message.length()) {
+    std::cerr << output_message << '\n';
     return -1;
   }
 
@@ -29,9 +24,9 @@ int main(int argc, const char* argv[]) {
   tree_sitter.parse(source_code);
 
   SyntaxVerifier syntax_verifier = SyntaxVerifier();
-  verify_message = syntax_verifier.verify(source_code, tree_sitter);
-  if(verify_message.length()) {
-    std::cerr << verify_message << '\n';
+  output_message = syntax_verifier.verify(source_code, tree_sitter);
+  if(output_message.length()) {
+    std::cerr << output_message << '\n';
     return -1;
   }
 

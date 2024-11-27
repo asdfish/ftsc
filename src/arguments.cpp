@@ -4,13 +4,12 @@
 #include <filesystem>
 #include <vector>
 
-Arguments::Arguments(int argc, const char* argv[], int* result) {
+
+Arguments::Arguments(void) {}
+int Arguments::parse(int argc, const char* argv[]) {
   input_files.reserve(argc);
 
-  if(result)
-    *result = carp_parse(argc, argv, &options[0], options.size(), parser_callback, this);
-  else
-    carp_parse(argc, argv, &options[0], options.size(), parser_callback, this);
+  return carp_parse(argc, argv, &options[0], options.size(), parser_callback, this);
 }
 void Arguments::print_help(void) const {
   std::cout << "ftsc: Fast typescript compiler\n"
