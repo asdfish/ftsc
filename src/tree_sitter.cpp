@@ -1,8 +1,10 @@
 #include <source_code.hpp>
 #include <tree_sitter.hpp>
 
+extern "C" {
 #include <tree_sitter/api.h>
 #include <tree-sitter-typescript.h>
+}
 
 #include <vector>
 

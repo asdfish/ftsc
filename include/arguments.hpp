@@ -1,7 +1,9 @@
 #ifndef ARGUMENTS_HPP
 #define ARGUMENTS_HPP
 
+extern "C" {
 #include <carp/carp.h>
+}
 
 #include <array>
 #include <string>

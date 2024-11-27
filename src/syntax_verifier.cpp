@@ -2,7 +2,9 @@
 #include <syntax_verifier.hpp>
 #include <tree_sitter.hpp>
 
+extern "C" {
 #include <tree_sitter/api.h>
+}
 
 #include <cstring>
 #include <iostream>
